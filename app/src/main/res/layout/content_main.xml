@@ -90,7 +90,6 @@
         android:layout_alignLeft="@+id/tvResult"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/tvResult"
-        android:layout_toLeftOf="@+id/tvRemainTrials"
         android:background="@drawable/btn_small"
         android:text="Replay"/>
 </RelativeLayout>
