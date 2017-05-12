@@ -1,10 +1,9 @@
 package ercanduman.numberguessgameandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,6 +21,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static int TRIALS = 10;
     private static int GUESSED_NUMBER;
 
+    private Button checkButton;
+
+    boolean isFound = false;
+    boolean isTrialFinished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GUESSED_NUMBER = new Random().nextInt(100);
 
         //Buttons
-        Button checkButton = (Button) findViewById(R.id.checkButton);
+        checkButton = (Button) findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
 
         Button replayButton = (Button) findViewById(R.id.buttonReplay);
@@ -76,7 +79,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkNumberAndStartGame() {
-//        Toast.makeText(this, "Check Button clicked!", Toast.LENGTH_SHORT).show();
+        if (isFound) {
+            Toast.makeText(this, "Already found! \nClick REPLAY button to start new game", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (isTrialFinished) {
+            Toast.makeText(this, "Trials are finished! \nClick REPLAY button to start new game", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String userCurrentInput = userGuessEditText.getText().toString().trim();
 
         if (userCurrentInput.length() == 0 || userCurrentInput.length() > 2) {
@@ -87,53 +98,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int usersNumberGuess = Integer.parseInt(userCurrentInput);
 
         if (usersNumberGuess > GUESSED_NUMBER) {
-            resultTextView.setText("It is smaller than your guess");
-            TRIALS--;
-            remainTrailsTextView.setText("You have " + TRIALS + " trials left");
+            updateViews("It is smaller than your guess");
         } else if (usersNumberGuess < GUESSED_NUMBER) {
-            resultTextView.setText("It is bigger than your guess");
-            TRIALS--;
-            remainTrailsTextView.setText("You have " + TRIALS + " trials left");
-        } else { //if (usersNumberGuess == GUESSED_NUMBER)
+            updateViews("It is bigger than your guess");
+        } else {
+            //(usersNumberGuess == GUESSED_NUMBER)
             resultTextView.setText("You found it in " + (10 - TRIALS) + " trials!");
-            TRIALS = 10;
             remainTrailsTextView.setText("Congratulations!");
-
+            isFound = true;
+            TRIALS = 10;
         }
 
         if (TRIALS == 0) {
             resultTextView.setText("Trials are finished!");
             remainTrailsTextView.setText("GAME OVER!");
+            isTrialFinished = true;
             TRIALS = 10;
         }
     }
 
+    private void updateViews(String text) {
+        resultTextView.setText(text);
+        TRIALS--;
+        remainTrailsTextView.setText("You have " + TRIALS + " trials left");
+    }
+
     private void startNewGame() {
-        Toast.makeText(this, "Replay Button clicked!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "New Game started!", Toast.LENGTH_SHORT).show();
 
-    }
+        Intent startFromScratch = new Intent(MainActivity.this, MainActivity.class);
+        startFromScratch.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(startFromScratch);
 
-
-    // HANDLE MENU ITEMS
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
