@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Number Guess Game Android App</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="start_game">I guessed a number between 0–100,\n Can you find it in 10 trails?</string>
+    <string name="dare">Can you find it in 10 trials?</string>
+
+
+</resources>
