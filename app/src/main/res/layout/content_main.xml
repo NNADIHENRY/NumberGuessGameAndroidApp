@@ -39,6 +39,8 @@
         android:gravity="center"
         android:hint="Type a number here"
         android:inputType="number"
+        android:lines="1"
+        android:maxLength="2"
         android:padding="8dp"/>
 
 
@@ -64,6 +66,8 @@
         android:layout_alignRight="@+id/checkButton"
         android:layout_below="@+id/checkButton"
         android:layout_marginTop="28dp"
+        android:digits="0123456789"
+        android:gravity="center"
         android:padding="8dp"
         android:text="@string/dare"
         android:textAppearance="?android:attr/textAppearanceMedium"/>

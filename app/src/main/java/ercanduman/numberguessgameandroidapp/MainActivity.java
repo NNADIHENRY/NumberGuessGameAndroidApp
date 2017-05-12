@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,13 +16,11 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button checkButton, replayButton;
     private TextView remainTrailsTextView, resultTextView;
     private EditText userGuessEditText;
 
     private static int TRIALS = 10;
     private static int GUESSED_NUMBER;
-    private int usersNumberGuess;
 
 
     @Override
@@ -31,16 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-    /*    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-            }
-        });*/
-
-
         initializeViews();
     }
 
@@ -49,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GUESSED_NUMBER = new Random().nextInt(100);
 
         //Buttons
-        checkButton = (Button) findViewById(R.id.checkButton);
+        Button checkButton = (Button) findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
 
-        replayButton = (Button) findViewById(R.id.buttonReplay);
+        Button replayButton = (Button) findViewById(R.id.buttonReplay);
         replayButton.setOnClickListener(this);
 
 
@@ -76,18 +65,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startNewGame();
                 break;
         }
+
+        //hide keyboard after button clicks
+        hideSoftKeyboard();
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private void checkNumberAndStartGame() {
-        Toast.makeText(this, "Check Button clicked!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Check Button clicked!", Toast.LENGTH_SHORT).show();
         String userCurrentInput = userGuessEditText.getText().toString().trim();
 
-        if (userCurrentInput.length() == 0) {
-            Toast.makeText(this, "Please enter a number", Toast.LENGTH_SHORT).show();
+        if (userCurrentInput.length() == 0 || userCurrentInput.length() > 2) {
+            Toast.makeText(this, "Please enter a number between 0 and 100", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        usersNumberGuess = Integer.parseInt(userCurrentInput);
+        int usersNumberGuess = Integer.parseInt(userCurrentInput);
 
         if (usersNumberGuess > GUESSED_NUMBER) {
             resultTextView.setText("It is smaller than your guess");
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             resultTextView.setText("It is bigger than your guess");
             TRIALS--;
             remainTrailsTextView.setText("You have " + TRIALS + " trials left");
-        } else {
+        } else { //if (usersNumberGuess == GUESSED_NUMBER)
             resultTextView.setText("You found it in " + (10 - TRIALS) + " trials!");
             TRIALS = 10;
             remainTrailsTextView.setText("Congratulations!");
@@ -113,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startNewGame() {
         Toast.makeText(this, "Replay Button clicked!", Toast.LENGTH_SHORT).show();
+
     }
 
 
