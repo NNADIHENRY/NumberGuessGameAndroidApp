@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isFound = false;
     boolean isTrialFinished = false;
 
+    static int usersTempNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int usersNumberGuess = Integer.parseInt(userCurrentInput);
 
+        //check previous number to prevent losing trial numbers
+        if (usersTempNumber == usersNumberGuess) {
+            Toast.makeText(this, "This number already checked, please try another number!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (usersNumberGuess > GUESSED_NUMBER) {
             updateViews("It is smaller than your guess");
         } else if (usersNumberGuess < GUESSED_NUMBER) {
@@ -118,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isTrialFinished = true;
             TRIALS = 10;
         }
+
+        usersTempNumber = usersNumberGuess;
     }
 
     private void updateViews(String text) {
