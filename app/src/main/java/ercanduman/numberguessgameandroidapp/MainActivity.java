@@ -102,11 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int usersNumberGuess = Integer.parseInt(userCurrentInput);
 
-        //check previous number to prevent losing trial numbers
+
+        //check previous number to prevent losing trial
         if (usersTempNumber == usersNumberGuess) {
             Toast.makeText(this, "This number already checked, please try another number!", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }//
 
         if (usersNumberGuess > GUESSED_NUMBER) {
             updateViews("It is smaller than your guess");
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateViews("It is bigger than your guess");
         } else {
             //(usersNumberGuess == GUESSED_NUMBER)
-            resultTextView.setText("You found it in " + (10 - TRIALS) + " trials!");
+            resultTextView.setText("Found it in " + (10 - TRIALS) + " trials!");
             remainTrailsTextView.setText("Congratulations!");
             isFound = true;
             TRIALS = 10;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TRIALS = 10;
         }
 
+        //assign input to a temp number
         usersTempNumber = usersNumberGuess;
     }
 
