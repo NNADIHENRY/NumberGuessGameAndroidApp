@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
 
     private TextView remainTrailsTextView, resultTextView;
     private EditText userGuessEditText;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //User input EditTexts
         userGuessEditText = (EditText) findViewById(R.id.userGuessText);
+        //handle key listener for EditText (enter/done clicked)
+        userGuessEditText.setOnKeyListener(this);
 
     }
 
@@ -130,5 +133,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startFromScratch.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(startFromScratch);
 
+    }
+
+    //handle key listener for edittext (enter/done clicked)
+    @Override
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+        if (keyEvent.getAction() == KeyEvent.ACTION_DOWN && i == KeyEvent.KEYCODE_ENTER) {
+            checkNumberAndStartGame();
+            return true;
+        }
+        return false;
     }
 }

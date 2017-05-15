@@ -17,25 +17,27 @@
 
     <TextView
         android:id="@+id/textView1"
+        style="@style/myTexts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/userGuessText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/start_game"
-        android:textColor="#000"/>
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/userGuessText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_above="@+id/checkButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
         android:background="@drawable/shape"
+        android:clickable="true"
         android:ems="10"
+        android:focusableInTouchMode="true"
         android:gravity="center"
         android:hint="Type a number here"
         android:inputType="number"
@@ -52,8 +54,8 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_alignRight="@+id/textView1"
         android:layout_alignStart="@+id/textView1"
-        android:layout_below="@+id/userGuessText"
-        android:layout_marginTop="43dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="40dp"
         android:background="@drawable/buton_big"
         android:text="  Check?  "/>
 
