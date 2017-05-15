@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkNumberAndStartGame() {
         if (isFound) {
-            Toast.makeText(this, "Already found! \nClick REPLAY button to start new game", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Already found! (" + GUESSED_NUMBER + ")\nClick REPLAY button to start new game", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -102,12 +102,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int usersNumberGuess = Integer.parseInt(userCurrentInput);
 
-
-        //check previous number to prevent losing trial
+        //check previous number to prevent losing trials number
         if (usersTempNumber == usersNumberGuess) {
-            Toast.makeText(this, "This number already checked, please try another number!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Number already checked, please try another one!", Toast.LENGTH_SHORT).show();
             return;
-        }//
+        }
 
         if (usersNumberGuess > GUESSED_NUMBER) {
             updateViews("It is smaller than your guess");
@@ -115,14 +114,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateViews("It is bigger than your guess");
         } else {
             //(usersNumberGuess == GUESSED_NUMBER)
-            resultTextView.setText("Found it in " + (10 - TRIALS) + " trials!");
+            resultTextView.setText("Found " + GUESSED_NUMBER + " in " + (10 - TRIALS) + " trials!");
             remainTrailsTextView.setText("Congratulations!");
             isFound = true;
             TRIALS = 10;
+
+            //when found, disable EditText
+            userGuessEditText.setKeyListener(null);
         }
 
         if (TRIALS == 0) {
-            resultTextView.setText("Trials are finished!");
+            resultTextView.setText("Trials are finished! The picked number is " + GUESSED_NUMBER);
             remainTrailsTextView.setText("GAME OVER!");
             isTrialFinished = true;
             TRIALS = 10;
