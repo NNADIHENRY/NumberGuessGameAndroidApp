@@ -15,5 +15,6 @@ GAMEOVER screenshot:
 
 ![device-2017-05-15-142739](https://cloud.githubusercontent.com/assets/11629459/26055900/84d960b2-397b-11e7-8509-99dce901f334.png)
 
-You can download the apk file [here ]( https://play.google.com/store/apps/details?id=com.ercanduman.numberguessgame)
+You can download the apk file [here]( https://play.google.com/store/apps/details?id=com.ercanduman.numberguessgame)
+
 
